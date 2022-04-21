@@ -1,0 +1,30 @@
+# There are numerous approaches to doing this activity. Perhaps the most reasonable choice is to utilize the groupby work inside the fillna work. 
+# Checking average price of each product:-
+
+grocery.groupby('product_description')['price'].mean()
+
+# output
+product_description
+apple           2.077778
+butter-0.25    11.400000
+cucumber        4.532857
+grape           4.400000
+milk-1.5        6.078571
+onion           2.150714
+orange          2.714286
+plum            4.389655
+tomato          3.121034
+yogurt-1        6.693103
+Name: price, dtype: float64
+
+# However, we can't utilize this line of code inside the fillna work. All things considered, we will transform it somewhat by adding the change strategy.
+
+grocery["price_new"] = grocery['price'].fillna(
+   grocery.groupby('product_description')['price'].transform("mean")
+)
+
+# How about we really take a look at the outcomes by contrasting the missing qualities in the cost section with the qualities in the new segment.
+
+grocery[grocery["price"].isna()].head()
+
+# The missing value for tomato is loaded up with 3.12 which is the typical worth we determined already. Essentially, the missing qualities for cucumber and onion are loaded up with the right typical worth.
